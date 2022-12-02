@@ -104,15 +104,18 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { mapActions, mapState } from 'vuex'
 
 const linksList = []
 
 export default defineComponent({
   name: 'MainLayout',
-
-  components: {
+  methods: {
+    ...mapActions('auth', ['deconnecterUtilisateur'])
   },
-
+  computed: {
+    ...mapState('auth', ['user'])
+  },
   setup () {
     const leftDrawerOpen = ref(false)
 

@@ -1,12 +1,12 @@
 <template>
   <q-page padding class="flex flex-center display-salle">
     <q-header class="flex row justify-between items-center elevated ">
-      <q-item>Capteur B1-01</q-item><q-item><q-icon name="star"></q-icon></q-item>
+      <q-item>Capteur</q-item><q-item><q-icon name="star"></q-icon></q-item>
     </q-header>
       <q-item-section>
         <q-item-section side>
           <q-list>
-            <q-item>Salle : B1-01</q-item>
+            <q-item>Salle : </q-item>
             <q-item>Date : 02-12-2022</q-item>
             <q-item>Température : 26.33°C</q-item>
             <q-item>Humidité : 95.12%</q-item>

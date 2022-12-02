@@ -3,35 +3,7 @@ import { afficherMessageErreur } from 'src/fonctions/message-erreur'
 
 // State : données du magasin
 const state = {
-  listeSalles: [
-    {
-      name: 'B1-01',
-      id: 1,
-      mesures: {
-        date: '2021-02-23',
-        temperature: 29.66,
-        humidite: 95.23
-      }
-    },
-    {
-      name: 'B1-02',
-      id: 2,
-      mesures: {
-        date: '2021-05-29',
-        temperature: 27.54,
-        humidite: 96.48
-      }
-    },
-    {
-      name: 'B1-03',
-      id: 3,
-      mesures: {
-        date: '2021-02-13',
-        temperature: 32.12,
-        humidite: 99.33
-      }
-    }
-  ]
+  listeSalles: []
 }
 
 /*
@@ -48,15 +20,18 @@ Actions : méthodes du magasin qui font appel aux mutations
 Elles peuvent être asynchrones !
  */
 const actions = {
-  getCapteursApi ({ commit }) {
-    api.get('http://tempapi.divtec.me/api/capteurs')
+  getCapteursApi ({ commit, rootState }) {
+    const config = {
+      headers: { Authorization: 'Bearer ' + rootState.auth.token }
+    }
+    api.get('/capteurs', config)
       .then(function (response) {
         console.log('Reussie')
         console.log(response)
-        commit('setClients', response.data.results)
+        commit('setSalles', response.data.results)
       })
       .catch(function (error) {
-        console.log('Erreur')
+        console.log('Erreur lors de la récupération des températures')
         afficherMessageErreur(
           'Erreur lors de la récupération des températures.'
         )

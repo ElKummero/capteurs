@@ -6,19 +6,19 @@
                       v-for="salle in listeSalles"
                       :key="salle.id"
                       :salle="salle"
-                      @click="isOpen = true">
+                      @click="openCapteurDisplay(salle)">
         <q-item-label class="flex flex-center text-body1 text-weight-light text-italic">{{ salle.name }}</q-item-label>
         <q-item-label class="text-caption text-weight-light">{{ salle.mesures.temperature }}°C</q-item-label>
       </q-item-section>
     </q-list>
-    <SalleView v-show="isOpen" @closeCapteurDisplay="closeDisplay()"/>
+    <SalleView v-show="isOpen"  @closeCapteurDisplay="closeDisplay()"/>
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import SalleView from 'components/SalleView'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -28,13 +28,23 @@ export default defineComponent({
   },
   data () {
     return {
-      isOpen: false
+      isOpen: false,
+      currentSalle: null
     }
   },
   methods: {
+    ...mapActions('salles', ['getCapteursApi']),
     closeDisplay () {
       this.isOpen = false
+    },
+    openCapteurDisplay (salle) {
+      this.currentSalle = salle
+      this.$route += salle
+      this.isOpen = true
     }
+  },
+  mounted () {
+    this.getCapteursApi()
   }
 })
 </script>
