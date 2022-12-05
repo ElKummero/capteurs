@@ -13,6 +13,7 @@ Les mutations ne peuvent pas être asynchrones !!!
 const mutations = {
   setSalles (state, salles) {
     state.listeSalles = salles
+    console.log(state.listeSalles)
   }
 }
 /*
@@ -27,8 +28,8 @@ const actions = {
     api.get('/capteurs', config)
       .then(function (response) {
         console.log('Reussie')
-        console.log(response)
-        commit('setSalles', response.data.results)
+        console.log(response.data)
+        commit('setSalles', response.data)
       })
       .catch(function (error) {
         console.log('Erreur lors de la récupération des températures')
