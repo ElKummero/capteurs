@@ -1,17 +1,21 @@
 <template>
   <q-page class="flex flex-center column">
-    <q-item-label class="text-weight-light q-ma-lg">DIVTEC - Capteurs températures</q-item-label>
+    <q-item-label class="text-weight-light q-ma-lg">Ateliers Informatiques de la DIVTEC</q-item-label>
     <q-item-label class="text-weight-bold q-ma-lg" style="color: #c20000" v-show="!user">Veuillez vous connecter</q-item-label>
     <q-list class="flex flex-center" v-show="!showTable && user">
       <q-item-section class="q-pa-lg q-ma-md flex flex-center capteurs-preview padding"
-                      :class="isSelected"
                       v-for="apiSalle in listeSalles"
                       :key="apiSalle.id"
                       :salle="apiSalle"
+                      :class="heat"
+                      :style="{backgroundColor: this.getColorTemp(apiSalle.mesures[0].temperature)}"
                       @click="openListDisplay(apiSalle)">
         <q-item-label class="flex flex-center text-body1 text-weight-light text-italic">{{ apiSalle.salle.nom }}</q-item-label>
         <q-item-label class="text-caption text-weight-light">{{ apiSalle.mesures[0].temperature }}°C</q-item-label>
       </q-item-section>
+      <div class="previewHeat">
+        <span>DIVTEC - Capteurs</span>
+      </div>
     </q-list>
     <q-item-section class="flex absolute q-mb-lg full-height full-width q-mt-lg" v-show="showTable">
       <q-table
@@ -67,7 +71,8 @@ export default defineComponent({
       currentSalle: null,
       columns,
       rows: [],
-      active: false
+      active: false,
+      heat: ''
     }
   },
   methods: {
@@ -79,26 +84,61 @@ export default defineComponent({
         this.rows.push(toRaw(salle.mesures[mesureKey]))
       }
     },
+    getColorTemp (valeur) {
+      if (valeur < 10) {
+        return '#f7fdff'
+      } else if (valeur >= 10 && valeur < 15) {
+        return '#d6f7ff'
+      } else if (valeur >= 15 && valeur < 20) {
+        return '#cff6ff'
+      } else if (valeur >= 20 && valeur < 23) {
+        return '#ffe6cd'
+      } else if (valeur >= 23 && valeur < 25) {
+        return '#ffd3a6'
+      } else if (valeur >= 25) {
+        return '#ffb994'
+      }
+    },
     closeListDisplay () {
       this.showTable = false
-    },
-    handleClick (box) {
-      box.active = !box.active
     }
   },
   mounted () {
     this.getCapteursApi()
   }
 })
+
 </script>
 <style lang="css" scoped>
 
+.previewHeat {
+  position: absolute;
+  width: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: -1;
+}
+
+.previewHeat span {
+  font-weight: bold;
+  font-size: 700%;
+  opacity: 10%;
+  z-index: -1;
+  user-select: none;
+}
+
 .capteurs-preview {
   background: #efefef;
+  border-radius: 4px;
 }
 
 .capteurs-preview:hover {
   cursor: pointer;
-  background: #e3e3e3;
+}
+
+.capteurs-preview:active {
+  outline: solid 1px black !important;
 }
 </style>
