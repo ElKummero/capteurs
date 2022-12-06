@@ -11,6 +11,7 @@
 const ESLintPlugin = require('eslint-webpack-plugin')
 
 const { configure } = require('quasar/wrappers')
+const { Dialog } = require('quasar')
 
 module.exports = configure(function (ctx) {
   return {
@@ -102,7 +103,8 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+      ]
     },
 
     // animations: 'all', // --- includes all animations

@@ -50,7 +50,7 @@ const actions = {
       .catch(function (error) {
         Loading.hide()
         afficherMessageErreur(
-          'Erreur de connexion. Veuillez vérifier vos identifiants.',
+          'Erreur de connexion. Veuillez vérifier vos identifiants. \n Vérifiez d\'être bien connecté a Internet.',
           Object.values(error.response.data)
         )
         throw error

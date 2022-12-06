@@ -82,23 +82,6 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-
-    <q-footer elevated>
-      <q-tabs>
-        <q-route-tab
-          to="/"
-          icon="home"
-          label="Capteurs"
-          exact
-        />
-        <q-route-tab
-          to="/favoris"
-          icon="star"
-          label="Favoris"
-          exact
-        />
-      </q-tabs>
-    </q-footer>
   </q-layout>
 </template>
 
