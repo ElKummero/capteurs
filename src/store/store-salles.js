@@ -1,5 +1,6 @@
 import { api } from 'boot/axios'
 import { afficherMessageErreur } from 'src/fonctions/message-erreur'
+import users from './store-auth'
 
 // State : données du magasin
 const state = {
@@ -13,6 +14,7 @@ Les mutations ne peuvent pas être asynchrones !!!
 const mutations = {
   setSalles (state, salles) {
     state.listeSalles = salles
+    console.log(state.listeSalles)
   }
 }
 /*
@@ -21,20 +23,23 @@ Elles peuvent être asynchrones !
  */
 const actions = {
   getCapteursApi ({ commit, rootState }) {
+    console.log('get capteurs api')
     const config = {
       headers: { Authorization: 'Bearer ' + rootState.auth.token }
     }
     api.get('/capteurs', config)
       .then(function (response) {
         console.log('Reussie')
-        console.log(response)
-        commit('setSalles', response.data.results)
+        console.log(response.data)
+        commit('setSalles', response.data)
       })
       .catch(function (error) {
-        console.log('Erreur lors de la récupération des températures')
-        afficherMessageErreur(
-          'Erreur lors de la récupération des températures.'
-        )
+        if (!users.getters.user()) {
+          console.log('test')
+          alert('Connectez vous pour avoir accès au capteurs.')
+        }
+        console.log('Erreur lors de la récupération des températures. Essayez de vous connecter')
+        afficherMessageErreur('Erreur lors de la récupération des températures.')
         throw error
       })
   }

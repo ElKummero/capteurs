@@ -1,6 +1,7 @@
 import { api } from 'boot/axios'
 import { afficherMessageErreur } from 'src/fonctions/message-erreur'
 import { Loading, LocalStorage } from 'quasar'
+import { getCapteursApi } from 'src/store/store-salles'
 
 // State : données du magasin
 const state = {
@@ -26,31 +27,17 @@ Actions : méthodes du magasin qui font appel aux mutations
 Elles peuvent être asynchrones !
  */
 const actions = {
-  enregistrerUtilisateur ({ commit, dispatch }, payload) {
-    Loading.show()
-    api.post('/register', payload)
-      .then(function (response) {
-        dispatch('setUser', response.data)
-      })
-      .catch(function (error) {
-        Loading.hide()
-        afficherMessageErreur(
-          'Erreur lors de la création de votre compte. Veuillez rééssayer',
-          Object.values(error.response.data)
-        )
-        throw error
-      })
-  },
   connecterUtilisateur ({ commit, dispatch }, payload) {
     Loading.show()
     api.post('/login', payload)
       .then(function (response) {
         dispatch('setUser', response.data)
+        getCapteursApi()
       })
       .catch(function (error) {
         Loading.hide()
         afficherMessageErreur(
-          'Erreur de connexion. Veuillez vérifier vos identifiants.',
+          'Erreur de connexion. Veuillez vérifier vos identifiants. \n Vérifiez d\'être bien connecté a Internet.',
           Object.values(error.response.data)
         )
         throw error

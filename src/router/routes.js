@@ -1,4 +1,3 @@
-
 const routes = [
   {
     path: '/',
@@ -6,8 +5,7 @@ const routes = [
     children: [
       { path: '/', component: () => import('pages/IndexPage.vue') },
       { path: '/favoris', component: () => import('pages/FavorisPage') },
-      { path: '/connexion', component: () => import('pages/PageConnexion') },
-      { path: '/:salle?', component: () => import('components/SalleView') }
+      { path: '/connexion', component: () => import('pages/PageConnexion') }
     ]
   },
 
