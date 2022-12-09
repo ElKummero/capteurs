@@ -14,7 +14,7 @@
         <q-item-label class="text-caption text-weight-light">{{ apiSalle.mesures[0].temperature }}°C</q-item-label>
       </q-item-section>
       <div class="previewHeat">
-        <span>DIVTEC - Capteurs</span>
+        <span>DIVTEC</span>
       </div>
     </q-list>
     <q-item-section class="flex absolute q-mb-lg full-height full-width q-mt-lg" v-show="showTable">
@@ -77,6 +77,8 @@ export default defineComponent({
   },
   methods: {
     ...mapActions('salles', ['getCapteursApi']),
+    // Ouvre le tableau de données de températures
+    // de la salle
     openListDisplay (salle) {
       this.showTable = true
       this.rows = []
@@ -84,6 +86,8 @@ export default defineComponent({
         this.rows.push(toRaw(salle.mesures[mesureKey]))
       }
     },
+    // Donne une représentation de couleurs selon
+    // la température de la salle
     getColorTemp (valeur) {
       if (valeur < 10) {
         return '#f7fdff'
@@ -95,15 +99,19 @@ export default defineComponent({
         return '#ffe6cd'
       } else if (valeur >= 23 && valeur < 25) {
         return '#ffd3a6'
-      } else if (valeur >= 25) {
+      } else if (valeur >= 25 && valeur < 27) {
         return '#ffb994'
+      } else if (valeur >= 27) {
+        return '#ff8170'
       }
     },
+    // Ferme le tableau de données
     closeListDisplay () {
       this.showTable = false
     }
   },
   mounted () {
+    // Donne les valeurs des capteurs de températures
     this.getCapteursApi()
   }
 })
